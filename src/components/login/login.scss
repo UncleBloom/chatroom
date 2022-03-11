@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "loginIconfont";
+  src: url("./font/iconfont.ttf") format("truetype");
+}
+
+.login {
+  .iconfont {
+    font-family: "loginIconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .loginBar{
+
+    display:flex;
+    align-items: center;
+    height:400px;
+
+    .info{
+        display:flex;
+        flex-direction: column;
+        height:100%;
+        width:400px;
+    }
+  }
+}

@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "loginIconfont";
+  src: url("./font/iconfont.ttf") format("truetype");
+}
+
+.inputBars {
+  .iconfont {
+    font-family: "loginIconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  & > div {
+    display: flex;
+    width: 100%;
+    height: 80px;
+    margin: auto 5px;
+    border-radius: 10px;
+    padding: 0 auto;
+
+    .iconfont {
+      width: 30px;
+      height: 100%;
+      margin: auto 5px;
+      line-height: 80px;
+      font-size: 30px;
+
+      flex: 0;
+    }
+
+    .anticon-info-circle {
+      position: relative;
+      right: 40px;
+      line-height: 80px;
+      font-size: 25px;
+      color: #444444;
+    }
+
+    input {
+      height: 80px;
+      width: 200px;
+      border: none;
+      background-color: #00000020;
+      color: #444444;
+      line-height: 30px;
+      font-size: 18px;
+      flex: 1;
+
+      padding-left: 20px;
+      border-radius: 40px;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
