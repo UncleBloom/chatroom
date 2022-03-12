@@ -16,7 +16,7 @@ function Login(params: ILoginParams) {
 
   const launchLogRequest = (type: "login" | "register") => {
     let inputIllegal: boolean = false;
-    if (username.length < 5 || username.length > 30) {
+    if (!/^(\d|\w|_){5,30}$/g.test(username)) {
       message.error("用户名不合法:请输入 5-30 位字符", 2);
       inputIllegal = true;
       setUsernameErr(true);
