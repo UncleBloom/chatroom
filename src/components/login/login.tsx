@@ -10,21 +10,37 @@ function Login(params: ILoginParams) {
   const [username, setUsername] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [usernameErr, setUsernameErr] = useState<boolean>(false);
+  const [nicknameErr, setNicknameErr] = useState<boolean>(false);
+  const [passwordErr, setPasswordErr] = useState<boolean>(false);
 
   const launchLogRequest = (type: "login" | "register") => {
+    let inputIllegal: boolean = false;
     if (username.length < 5 || username.length > 30) {
-      message.warning("用户名不合法:请输入 5-30 位字符", 2);
-      return;
+      message.error("用户名不合法:请输入 5-30 位字符", 2);
+      inputIllegal = true;
+      setUsernameErr(true);
+    } else {
+      setUsernameErr(false);
     }
     if (
       LogRegister === "register" &&
       (nickname.length < 1 || nickname.length > 30)
     ) {
-      message.warning("用户昵称不合法:请输入 1-30 位字符", 2);
-      return;
+      message.error("用户昵称不合法:请输入 1-30 位字符", 2);
+      inputIllegal = true;
+      setNicknameErr(true);
+    } else {
+      setNicknameErr(false);
     }
     if (!/(\d|\w){8,20}$/g.test(password)) {
-      message.warning("密码输入不合法:请输入 8-20 位的数字或大小写字母", 2);
+      message.error("密码输入不合法:请输入 8-20 位的数字或大小写字母", 2);
+      inputIllegal = true;
+      setPasswordErr(true);
+    } else {
+      setPasswordErr(false);
+    }
+    if (inputIllegal) {
       return;
     }
   };
@@ -46,6 +62,9 @@ function Login(params: ILoginParams) {
             setUsername={setUsername}
             setNickname={setNickname}
             setPassword={setPassword}
+            usernameErr={usernameErr}
+            nicknameErr={nicknameErr}
+            passwordErr={passwordErr}
             launchLogRequest={launchLogRequest}
           />
           <div
