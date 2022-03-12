@@ -25,7 +25,7 @@ function InputBars(params: IInputBarParams) {
           onChange={(e) => params.setUsername(e.target.value)}
         />
         {params.LogRegister === "register" ? (
-          <Tooltip title="登陆时的用户名，建议使用 QQ 号、手机号等">
+          <Tooltip title="登陆时的用户名，建议使用 QQ 号、手机号等不与他人重复的数字/字符串">
             <InfoCircleOutlined />
           </Tooltip>
         ) : (

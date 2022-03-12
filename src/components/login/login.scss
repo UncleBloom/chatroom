@@ -4,6 +4,7 @@
 }
 
 .login {
+  
   .iconfont {
     font-family: "loginIconfont" !important;
     font-size: 16px;
@@ -12,18 +13,74 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
-  .loginBar{
-
-    display:flex;
+  
+  .loginBar {
+    position: absolute;
+    margin: auto;
+    top:0;
+    left:0;
+    bottom: 0;
+    right:0;
+    
+    display: flex;
     align-items: center;
-    height:400px;
+    height: 400px;
+    width: 800px;
+    padding: 20px 40px;
+    border-radius: 200px;
+    justify-content: space-between;
+    box-shadow:0px 0px 20px #2fcfd4;
 
-    .info{
-        display:flex;
+    .info {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 400px;
+
+      .title {
+        height: 60px;
+        line-height: 60px;
+        font-size: 20px;
+        flex: 0;
+      }
+
+      .changeType {
+        height: 30px;
+        line-height: 30px;
+        font-size: 14px;
+        cursor: pointer;
+        flex: 0;
+        user-select: none;
+
+        &:hover {
+          color: rgb(49, 120, 201);
+        }
+      }
+
+      .inputBars {
+        display: flex;
         flex-direction: column;
-        height:100%;
-        width:400px;
+        flex: 1;
+        justify-content: space-around;
+      }
+    }
+
+    .logButton {
+      height: 300px;
+      width: 300px;
+      justify-content: center;
+      line-height: 300px;
+      border-radius: 50%;
+      margin: auto 0;
+
+      .iconfont {
+        font-size: 80px;
+        font-weight: lighter;
+      }
+
+      &:hover {
+        background-color: rgb(198, 218, 240);
+      }
     }
   }
 }
