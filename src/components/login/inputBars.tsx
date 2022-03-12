@@ -33,7 +33,7 @@ function InputBars(params: IInputBarParams) {
           }}
         />
         {params.LogRegister === "register" ? (
-          <Tooltip title="登陆时的用户名，建议使用 QQ 号、手机号等不与他人重复的数字/字符串">
+          <Tooltip title="独一无二的登陆用户名，由5-30位字符组成（建议使用 QQ 号、手机号等不与他人重复的数字/字符串）">
             <InfoCircleOutlined />
           </Tooltip>
         ) : (
@@ -50,7 +50,7 @@ function InputBars(params: IInputBarParams) {
             value={params.nickname}
             onChange={(e) => params.setNickname(e.target.value)}
           />
-          <Tooltip title="聊天时展示的用户昵称">
+          <Tooltip title="聊天时展示的用户昵称，由1-30位字符组成">
             <InfoCircleOutlined />
           </Tooltip>
         </div>
@@ -72,7 +72,7 @@ function InputBars(params: IInputBarParams) {
           }}
         />
         {params.LogRegister === "register" ? (
-          <Tooltip title="密码由字母和数字组成">
+          <Tooltip title="密码由8-20位大小写字母或数字组成">
             <InfoCircleOutlined />
           </Tooltip>
         ) : (
