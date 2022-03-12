@@ -24,6 +24,7 @@ function InputBars(params: IInputBarParams) {
         <input
           type="text"
           placeholder="用户名"
+          spellCheck="false"
           value={params.username}
           onChange={(e) => params.setUsername(e.target.value)}
           onKeyDown={(e) => {
@@ -47,6 +48,7 @@ function InputBars(params: IInputBarParams) {
           <input
             type="text"
             placeholder="用户昵称"
+            spellCheck="false"
             value={params.nickname}
             onChange={(e) => params.setNickname(e.target.value)}
           />
@@ -63,6 +65,7 @@ function InputBars(params: IInputBarParams) {
         <input
           type="password"
           placeholder="登陆密码"
+          spellCheck="false"
           value={params.password}
           onChange={(e) => params.setPassword(e.target.value)}
           onKeyDown={(e) => {
