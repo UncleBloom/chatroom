@@ -34,7 +34,7 @@ function InputBars(params: IInputBarParams) {
           }}
         />
         {params.LogRegister === "register" ? (
-          <Tooltip title="独一无二的登陆用户名，由5-30位大小写字母、数字、下划线组成（建议使用 QQ 号、手机号等不与他人重复的数字/字符串）">
+          <Tooltip title="独一无二的登录用户名，由5-30位大小写字母、数字、下划线组成（建议使用 QQ 号、手机号等不与他人重复的数字/字符串）">
             <InfoCircleOutlined />
           </Tooltip>
         ) : (
@@ -64,7 +64,7 @@ function InputBars(params: IInputBarParams) {
         <div className="iconfont">&#xeae6;</div>
         <input
           type="password"
-          placeholder="登陆密码"
+          placeholder="登录密码"
           spellCheck="false"
           value={params.password}
           onChange={(e) => params.setPassword(e.target.value)}
