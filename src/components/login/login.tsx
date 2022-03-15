@@ -63,7 +63,7 @@ function Login(params: ILoginParams) {
           }
         : {
             user_name: username,
-            nick_name: nickname,
+            nickname: nickname,
             password: password,
           };
 

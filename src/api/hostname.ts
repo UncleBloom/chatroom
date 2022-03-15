@@ -1,3 +1,3 @@
-const serverHost = "http://localhost:4000/api";
+const serverHost = "http://175.178.43.145:4001/api";
 
 export default serverHost;
