@@ -86,6 +86,15 @@
         inset 0 0 40px #bbbbbb,
         0 0 10px #40a3e6;
       }
+
+      .ant-spin-dot{
+        font-size: 70px;
+
+        .ant-spin-dot-item{
+          width: 30px;
+          height: 30px;
+        }
+      }
     }
   }
 }

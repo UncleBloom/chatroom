@@ -1,7 +1,7 @@
 import { useState } from "react";
 import InputBars from "./inputBars";
 import "./login.scss";
-import { message } from "antd";
+import { message, Spin } from "antd";
 import axios from "axios";
 import serverHost from "../../api/hostname";
 import IErrRes from "../../types/IErrRes";
@@ -14,6 +14,7 @@ interface ILoginParams {
 
 function Login(params: ILoginParams) {
   const [LogRegister, setLogRegister] = useState<"login" | "register">("login");
+  const [waiting, setWaiting] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -28,8 +29,6 @@ function Login(params: ILoginParams) {
       message.error("用户名不合法:请输入 5-30 位字符", 2);
       inputIllegal = true;
       setUsernameErr(true);
-    } else {
-      setUsernameErr(false);
     }
     if (
       // 检验用户昵称是否合法
@@ -39,17 +38,18 @@ function Login(params: ILoginParams) {
       message.error("用户昵称不合法:请输入 1-30 位字符", 2);
       inputIllegal = true;
       setNicknameErr(true);
-    } else {
-      setNicknameErr(false);
     }
     if (!/(\d|\w){8,20}$/g.test(password)) {
       // 检验密码输入是否合法
       message.error("密码输入不合法:请输入 8-20 位的数字或大小写字母", 2);
       inputIllegal = true;
       setPasswordErr(true);
-    } else {
-      setPasswordErr(false);
     }
+    if (waiting) {
+      message.warning("正在等待服务器响应", 1);
+      inputIllegal = true;
+    }
+
     if (inputIllegal) {
       // 如果登录信息不合法则立即停止登录
       return;
@@ -67,20 +67,30 @@ function Login(params: ILoginParams) {
             password: password,
           };
 
-    const response = await axios.post(serverHost + `/${LogRegister}`, postData);
-    if (response.status === 200) {
-      let data: IUserRes = response.data as IUserRes;
-      params.logAs({
-        user_id: data.user_id,
-        username: data.user_name,
-        nickname: data.nickname,
+    setWaiting(true);
+    axios
+      .post(serverHost + `/${LogRegister}`, postData)
+      .then((res) => {
+        let data = res.data as IUserRes;
+        message.success(`${LogRegister === "login" ? "登录" : "注册"}成功`, 2);
+        params.logAs({
+          user_id: data.user_id,
+          username: data.user_name,
+          nickname: data.nickname,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        if (!err.response) {
+          message.error("服务器错误", 2);
+        } else {
+          let data = err.response.data as IErrRes;
+          message.error(data.msg, 2);
+        }
+      })
+      .finally(() => {
+        setWaiting(false);
       });
-      message.success("登录成功", 2);
-    } else {
-      let data: IErrRes = response.data as IErrRes;
-      message.error(data.msg, 2);
-      return;
-    }
   };
 
   return (
@@ -123,7 +133,9 @@ function Login(params: ILoginParams) {
             launchLogRequest(LogRegister);
           }}
         >
-          {LogRegister === "login" ? (
+          {waiting ? (
+            <Spin size="large" />
+          ) : LogRegister === "login" ? (
             <div className="iconfont">&#xe6dd;</div>
           ) : (
             <div className="iconfont">&#xe683;</div>
