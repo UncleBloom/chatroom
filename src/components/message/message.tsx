@@ -8,7 +8,14 @@ interface IMessageParams {
 }
 
 function Message(params: IMessageParams) {
-  return <div className={`message ${params.status}`}></div>;
+  const content = params.content,
+    nickname = params.nickname,
+    user_id = params.user_id;
+  return (
+    <div className={`message ${params.status}`}>
+      <div className="avatar">{}</div>
+    </div>
+  );
 }
 
 /**
@@ -36,4 +43,8 @@ const hashCode = (num: number): number[] => {
   s %= 30;
   l %= 30;
   return [h, s + 40, l + 40];
+};
+
+const avatarChar = (nickname: string): string => {
+  return "";
 };
