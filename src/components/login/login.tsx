@@ -5,7 +5,6 @@ import { message, Spin } from "antd";
 import axios from "axios";
 import serverHost from "../../api/hostname";
 import IErrRes from "../../types/IErrRes";
-import IUserRes from "../../types/IUserRes";
 import IUserInfo from "../../types/IUserInfo";
 
 interface ILoginParams {
@@ -71,13 +70,9 @@ function Login(params: ILoginParams) {
     axios
       .post(serverHost + `/${LogRegister}`, postData)
       .then((res) => {
-        let data = res.data as IUserRes;
+        let data = res.data as IUserInfo;
         message.success(`${LogRegister === "login" ? "登录" : "注册"}成功`, 2);
-        params.logAs({
-          user_id: data.user_id,
-          username: data.user_name,
-          nickname: data.nickname,
-        });
+        params.logAs(data);
       })
       .catch((err) => {
         console.log(err);

@@ -1,5 +1,5 @@
 export default interface IUserInfo {
   user_id: number;
-  username: string;
+  user_name: string;
   nickname: string;
 }
