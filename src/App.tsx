@@ -14,14 +14,14 @@ function App() {
 
   return (
     <div className="App">
-      <Login
+      {/* <Login
         logAs={(userInfo: IUserInfo) => {
           setUserInfo(userInfo);
           if (userInfo.user_id !== 0) {
             setLogged(true);
           }
         }}
-      />
+      /> */}
       <Chat />
     </div>
   );
