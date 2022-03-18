@@ -9,7 +9,7 @@ interface IMessageParams {
   status: "receive" | "sending" | "sent" | "fail";
 }
 
-function Message(params: IMessageParams) {
+export default function Message(params: IMessageParams) {
   const hsl = hashCode(params.nickname);
   const bgcolor = `hsl(${hsl[0]},${hsl[1]}%,${hsl[2]}%)`;
   return (
