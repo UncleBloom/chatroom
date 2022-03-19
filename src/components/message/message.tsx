@@ -1,3 +1,9 @@
+import {
+  ExclamationCircleOutlined,
+  LoadingOutlined,
+  SyncOutlined,
+} from "@ant-design/icons";
+import { Popover } from "antd";
 import "./message.scss";
 
 interface IMessageParams {
@@ -17,12 +23,24 @@ export default function Message(params: IMessageParams) {
       <div className="avatar" style={{ background: bgcolor }}>
         <div className="avatarChar">{avatarChar(params.nickname)}</div>
       </div>
-      <div className="content">
+      <div className="messageBox">
+        <div className="nickname">{params.nickname}</div>
         <div className="text">{params.content}</div>
         <div className="time">
           {timeString(new Date(params.sentTime), params.nowTime)}
         </div>
       </div>
+      {params.status === "fail" ? (
+        <Popover content="发送失败">
+          <ExclamationCircleOutlined />
+        </Popover>
+      ) : params.status === "sending" ? (
+        <Popover content="发送中">
+          <SyncOutlined spin />
+        </Popover>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
@@ -44,6 +62,9 @@ const hashCode = (nickname: string): number[] => {
     l = (l << 2) - l + nickname.charCodeAt(i);
     l |= 0;
   }
+  h *= 100;
+  s *= 10;
+  l *= 10;
   h %= 360;
   s %= 30;
   l %= 30;

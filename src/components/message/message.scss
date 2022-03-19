@@ -1,0 +1,81 @@
+.chat .messages{
+
+    overflow-y: scroll;
+
+    .message{
+        position:relative;
+        display:flex;
+        margin: 30px 0;
+
+        .avatar{
+            margin:0 30px;
+            width:60px;
+            height: 60px;
+            border-radius:50%;
+            flex-shrink: 0;
+            flex-grow: 0;
+            user-select: none;
+
+            .avatarChar{
+                line-height:60px;
+                color:white;
+                font-size: 18px;
+                font-weight: 600;
+                letter-spacing: 2px;
+            }
+        }
+
+        .messageBox{
+
+            .nickname ,.time{
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 12px;
+                color: #aaa;
+                margin:5px; 
+            }
+
+            .text{
+                padding:14px;
+                border-radius:15px;
+                letter-spacing: 1px;
+                font-size: 14px;
+                text-align: left;
+            }
+        }
+
+        
+    }
+    
+    .receive{
+        flex-direction: row;
+        margin-right: 140px;
+        .nickname ,.time{
+            text-align: left;
+        }
+        .text{
+            background-color:rgb(190, 239, 255);
+        }
+    }
+
+    .sending ,.sent ,.fail{
+        flex-direction: row-reverse;
+        margin-left: 140px;
+        .nickname ,.time{
+            text-align: right;
+        }
+        .text{
+            background-color:lavender;
+        }
+    }
+
+    .sending ,.fail{
+        margin-left: 80px;
+        .anticon{
+            margin:auto 20px;
+            height:20px;
+            width:20px;
+            font-size: 20px;
+        }
+    }
+}

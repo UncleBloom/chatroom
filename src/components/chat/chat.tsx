@@ -13,6 +13,7 @@ function Chat(params: IChatParams) {
       <div className="messages">
         {testMessages.map((msg) => (
           <Message
+            key={msg.messageID}
             content={msg.content}
             nickname={msg.nickname}
             user_id={msg.userID}
@@ -40,7 +41,8 @@ interface messageInfo {
 
 const testMessages: messageInfo[] = [
   {
-    content: "测试消息：别人发送成功",
+    content:
+      "测试消息：别人发送成功。很长很长很长；测试消息：别人发送成功。很长很长很长；测试消息：别人发送成功。很长很长很长；测试消息：别人发送成功。很长很长很长；测试消息：别人发送成功。很长很长很长；测试消息：别人发送成功。很长很长很长；",
     messageID: 0,
     sentTime: 0,
     nickname: "测试用户A",
@@ -48,7 +50,8 @@ const testMessages: messageInfo[] = [
     status: "receive",
   },
   {
-    content: "测试消息：自己发送成功",
+    content:
+      "测试消息：自己发送成功。测试消息：自己发送成功。测试消息：自己发送成功。测试消息：自己发送成功。测试消息：自己发送成功。测试消息：自己发送成功。测试消息：自己发送成功。",
     messageID: 1,
     sentTime: 1234567890,
     nickname: "测试用户B",
@@ -64,7 +67,8 @@ const testMessages: messageInfo[] = [
     status: "fail",
   },
   {
-    content: "测试消息：自己发送中",
+    content:
+      "测试消息：自己发送中。测试消息：自己发送中。测试消息：自己发送中。测试消息：自己发送中。测试消息：自己发送中。测试消息：自己发送中。测试消息：自己发送中。",
     messageID: 3,
     sentTime: 987654323,
     nickname: "测试用户B",
