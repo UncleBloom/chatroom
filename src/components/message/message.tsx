@@ -1,8 +1,4 @@
-import {
-  ExclamationCircleOutlined,
-  LoadingOutlined,
-  SyncOutlined,
-} from "@ant-design/icons";
+import { ExclamationCircleOutlined, SyncOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
 import "./message.scss";
 
@@ -81,19 +77,14 @@ const avatarChar = (nickname: string): string => {
 };
 
 const timeString = (past: Date, now: Date): string => {
-  const minuteLength: number = (now.getTime() - past.getTime()) / 60_000;
-  if (minuteLength < 1) {
-    return `刚刚`;
-  } else if (minuteLength < 60) {
-    return `${Math.floor(minuteLength)}分钟前`;
-  } else if (minuteLength < 1440) {
-    return `${Math.floor(minuteLength / 60)}小时前`;
+  if (past.getFullYear() !== now.getFullYear()) {
+    return `${past.getFullYear()}/${past.getMonth()}/${past.getDate()} ${past.getHours()}:${past.getMinutes()}`;
+  } else if (
+    past.getMonth() !== now.getMonth() ||
+    past.getDate() !== now.getDate()
+  ) {
+    return `${past.getMonth()}/${past.getDate()} ${past.getHours()}:${past.getMinutes()}`;
   } else {
-    const minute: number = past.getMinutes();
-    const hour: number = past.getHours();
-    return `${past.getFullYear()}年${past.getMonth()}月${past.getDate()}日 
-    ${hour < 10 ? "0" : ""}${hour.toString()}:${
-      minute < 10 ? "0" : ""
-    }${minute.toString()}`;
+    return `${past.getHours()}:${past.getMinutes()}`;
   }
 };
