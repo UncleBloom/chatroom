@@ -79,13 +79,17 @@ function Login(params: ILoginParams) {
           setLogRegister("login");
         } else {
           // 登录
-          let data = res.data as { user_id: number; token: string };
+          let data = res.data as {
+            user_id: number;
+            nickname: string;
+            token: string;
+          };
           message.success("登陆成功", 2);
           console.log(data);
           params.logAs({
             user_id: data.user_id,
             user_name: username,
-            nickname: nickname,
+            nickname: data.nickname,
           });
           params.setToken(data.token);
         }

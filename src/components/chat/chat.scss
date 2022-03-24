@@ -1,0 +1,17 @@
+.chat  {
+    position:relative;
+    display:flex;
+    flex-direction:row;
+    height:100vh;
+
+
+    .messages{
+        flex: 1;
+    }
+
+    .input{
+        position:absolute;
+        bottom:0;
+        flex:0;
+    }
+}

@@ -48,6 +48,7 @@ function Chat(params: IChatParams) {
   }, [ws, params.token]);
 
   useEffect(() => {
+    // console.log(msgWindow.current?.scrollTop);
     if (msgWindow.current) {
       msgWindow.current.scrollTop = msgWindow?.current?.scrollHeight;
     }
@@ -55,8 +56,11 @@ function Chat(params: IChatParams) {
 
   const nowTime = new Date();
   const sendMsg = (Content: string) => {
-    ws.current?.send(JSON.parse(`{"message_content":"${Content}"}`));
-    console.log(JSON.parse(`{"message_content":"${Content}"}`));
+    ws.current?.send(
+      JSON.stringify({
+        message_content: Content,
+      })
+    );
     let msgData: IMessageInfo = {
       user: {
         user_id: params.userInfo.user_id,
@@ -65,21 +69,19 @@ function Chat(params: IChatParams) {
       message_content: Content,
       send_time: new Date().getTime(),
     };
-    let nextMsgList = msgList.concat(msgData);
-    // nextMsgList.push(msgData);
-    setMsgList(nextMsgList);
+    setMsgList((list) => list.concat([msgData]));
   };
+
   const handleReceiveMsg = (event: MessageEvent) => {
-    let msgData = JSON.parse(event.data) as IMessageInfo;
-    msgData.send_time *= 1000;
-    console.log(msgData);
-    if (msgData.user.user_id === params.userInfo.user_id) {
+    let data = JSON.parse(event.data) as IMessageInfo;
+    data.send_time *= 1000;
+    if (data.user.user_id === params.userInfo.user_id) {
       // 如果接收到的消息是自己发送的则忽略
       return;
     }
-    let nextMsgList = msgList.concat(msgData);
-    // nextMsgList.push(msgData);
-    setMsgList(nextMsgList);
+    let nextMsgList = [...msgList];
+    nextMsgList.push(data);
+    setMsgList((list) => list.concat([data]));
   };
 
   return (
