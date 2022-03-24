@@ -72,6 +72,9 @@ const hashCode = (nickname: string): number[] => {
  * @returns 头像中显示的字母
  */
 const avatarChar = (nickname: string): string => {
+  if (/^[A-Za-z0-9]+$/g) {
+    return nickname.substring(0, 2);
+  }
   return nickname.substring(nickname.length - 2);
 };
 

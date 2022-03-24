@@ -40,9 +40,9 @@ function Login(params: ILoginParams) {
       inputIllegal = true;
       setNicknameErr(true);
     }
-    if (!/(\d|\w){8,20}$/g.test(password)) {
+    if (!/(\d|\w){6,20}$/g.test(password)) {
       // 检验密码输入是否合法
-      message.error("密码输入不合法:请输入 8-20 位的数字或大小写字母", 2);
+      message.error("密码输入不合法:请输入 6-20 位的数字或大小写字母", 2);
       inputIllegal = true;
       setPasswordErr(true);
     }
