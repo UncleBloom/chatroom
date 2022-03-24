@@ -57,16 +57,16 @@ function Chat(params: IChatParams) {
   const nowTime = new Date();
   const sendMsg = (Content: string) => {
     ws.current?.send(Content);
-    let nextMsgList = msgList,
-      msgData: IMessageInfo = {
-        user: {
-          user_id: params.userInfo.user_id,
-          nickname: params.userInfo.nickname,
-        },
-        message_content: Content,
-        send_time: new Date().getTime(),
-      };
-    nextMsgList.push(msgData);
+    let msgData: IMessageInfo = {
+      user: {
+        user_id: params.userInfo.user_id,
+        nickname: params.userInfo.nickname,
+      },
+      message_content: Content,
+      send_time: new Date().getTime(),
+    };
+    let nextMsgList = msgList.concat(msgData);
+    // nextMsgList.push(msgData);
     setMsgList(nextMsgList);
   };
   const handleReceiveMsg = (event: MessageEvent) => {
@@ -77,8 +77,8 @@ function Chat(params: IChatParams) {
       // 如果接收到的消息是自己发送的则忽略
       return;
     }
-    let nextMsgList = msgList;
-    nextMsgList.push(msgData);
+    let nextMsgList = msgList.concat(msgData);
+    // nextMsgList.push(msgData);
     setMsgList(nextMsgList);
   };
 
@@ -104,12 +104,3 @@ function Chat(params: IChatParams) {
 }
 
 export default Chat;
-
-interface messageInfo {
-  content: string;
-  messageID: number;
-  sentTime: number;
-  nickname: string;
-  userID: number;
-  status: "receive" | "sending" | "sent" | "fail";
-}
