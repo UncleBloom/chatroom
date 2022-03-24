@@ -28,7 +28,6 @@ function Chat(params: IChatParams) {
 
   useLayoutEffect(() => {
     if (params.token !== "") {
-      console.log(wsHostname + "/?token=" + params.token);
       ws.current = new WebSocket(wsHostname + "/?token=" + params.token);
       ws.current.onopen = () => {
         setConnectReady(true);
@@ -56,7 +55,8 @@ function Chat(params: IChatParams) {
 
   const nowTime = new Date();
   const sendMsg = (Content: string) => {
-    ws.current?.send(Content);
+    ws.current?.send(JSON.parse(`{"message_content":"${Content}"}`));
+    console.log(JSON.parse(`{"message_content":"${Content}"}`));
     let msgData: IMessageInfo = {
       user: {
         user_id: params.userInfo.user_id,
