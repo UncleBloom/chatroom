@@ -8,7 +8,9 @@ import IErrRes from "../../types/IErrRes";
 import IUserInfo from "../../types/IUserInfo";
 
 interface ILoginParams {
+  logged: boolean;
   logAs: (userInfo: IUserInfo) => void;
+  setToken: (token: string) => void;
 }
 
 function Login(params: ILoginParams) {
@@ -21,7 +23,7 @@ function Login(params: ILoginParams) {
   const [nicknameErr, setNicknameErr] = useState<boolean>(false);
   const [passwordErr, setPasswordErr] = useState<boolean>(false);
 
-  const launchLogRequest = async (type: "login" | "register") => {
+  const checkInputIllegal = (): boolean => {
     let inputIllegal: boolean = false;
     if (!/^(\d|\w|_){5,30}$/g.test(username)) {
       // 检验用户名是否合法
@@ -49,11 +51,13 @@ function Login(params: ILoginParams) {
       inputIllegal = true;
     }
 
-    if (inputIllegal) {
-      // 如果登录信息不合法则立即停止登录
+    return inputIllegal;
+  };
+
+  const launchLogRequest = async (type: "login" | "register") => {
+    if (checkInputIllegal()) {
       return;
     }
-
     let postData =
       LogRegister === "login"
         ? {
@@ -65,14 +69,25 @@ function Login(params: ILoginParams) {
             nickname: nickname,
             password: password,
           };
-
     setWaiting(true);
     axios
       .post(serverHost + `/${LogRegister}`, postData)
       .then((res) => {
-        let data = res.data as IUserInfo;
-        message.success(`${LogRegister === "login" ? "登录" : "注册"}成功`, 2);
-        params.logAs(data);
+        if (type === "register") {
+          // 注册
+          message.success("注册成功，请登录", 2);
+          setLogRegister("login");
+        } else {
+          // 登录
+          let data = res.data as { user_id: number; token: string };
+          message.success("登陆成功", 2);
+          params.logAs({
+            user_id: data.user_id,
+            user_name: username,
+            nickname: nickname,
+          });
+          params.setToken(data.token);
+        }
       })
       .catch((err) => {
         console.log(err);

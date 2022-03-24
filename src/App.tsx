@@ -11,18 +11,21 @@ function App() {
     user_name: "",
     nickname: "",
   });
+  const [token, setToken] = useState<string>("");
 
   return (
     <div className="App">
-      {/* <Login
+      <Login
+        logged={logged}
         logAs={(userInfo: IUserInfo) => {
           setUserInfo(userInfo);
           if (userInfo.user_id !== 0) {
             setLogged(true);
           }
         }}
-      /> */}
-      <Chat />
+        setToken={setToken}
+      />
+      {logged ? <Chat token={token} userInfo={userInfo} /> : <></>}
     </div>
   );
 }

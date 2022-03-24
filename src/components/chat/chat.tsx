@@ -1,16 +1,69 @@
 import "./chat.scss";
 import Input from "../input/input";
 import Message from "../message/message";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import wsHostname from "../../api/wshost";
+import IUserInfo from "../../types/IUserInfo";
 
-interface IChatParams {}
+interface IChatParams {
+  token: string;
+  userInfo: IUserInfo;
+}
+
+interface IMessageInfo {
+  user: {
+    user_id: number;
+    nickname: string;
+  };
+  message_content: string;
+  send_time: number; // 秒
+}
 
 function Chat(params: IChatParams) {
-  const sendMsg = (Content: string) => {};
+  const [connectReady, setConnectReady] = useState<boolean>(false);
+  const [msgList, setMsgList] = useState<IMessageInfo[]>([]);
+  const ws = useRef<WebSocket | null>(null);
+  const msgWindow = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    ws.current = new WebSocket(wsHostname + "?token=" + params.token);
+    ws.current.onopen = () => {
+      setConnectReady(true);
+    };
+    ws.current.close = () => {
+      setConnectReady(false);
+    };
+    ws.current.onmessage = handleReceiveMsg;
+
+    return () => {
+      ws.current?.close();
+    };
+  }, [ws]);
+
+  useEffect(() => {
+    if (msgWindow.current) {
+      msgWindow.current.scrollTop = msgWindow?.current?.scrollHeight;
+    }
+  }, [msgList]);
+
   const nowTime = new Date();
+  const sendMsg = (Content: string) => {
+    ws?.current?.send(Content);
+  };
+  const handleReceiveMsg = (event: MessageEvent) => {
+    let msgData = event.data as IMessageInfo;
+    if (msgData.user.user_id === params.userInfo.user_id) {
+      // 如果接收到的消息是自己发送的则忽略
+      return;
+    }
+    let nextMsgList = msgList;
+    nextMsgList.push(msgData);
+    setMsgList(nextMsgList);
+  };
 
   return (
     <div className="chat">
-      <div className="messages">
+      <div className="messages" ref={msgWindow}>
         {testMessages.map((msg) => (
           <Message
             key={msg.messageID}
