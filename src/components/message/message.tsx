@@ -5,7 +5,6 @@ import "./message.scss";
 interface IMessageParams {
   content: string;
   nickname: string;
-  user_id: number;
   nowTime: Date;
   sentTime: number;
   status: "receive" | "sending" | "sent" | "fail";

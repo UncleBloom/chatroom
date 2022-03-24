@@ -81,6 +81,7 @@ function Login(params: ILoginParams) {
           // 登录
           let data = res.data as { user_id: number; token: string };
           message.success("登陆成功", 2);
+          console.log(data);
           params.logAs({
             user_id: data.user_id,
             user_name: username,

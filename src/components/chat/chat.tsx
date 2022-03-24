@@ -4,6 +4,7 @@ import Message from "../message/message";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import wsHostname from "../../api/wshost";
 import IUserInfo from "../../types/IUserInfo";
+import { message } from "antd";
 
 interface IChatParams {
   token: string;
@@ -26,19 +27,26 @@ function Chat(params: IChatParams) {
   const msgWindow = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    ws.current = new WebSocket(wsHostname + "?token=" + params.token);
-    ws.current.onopen = () => {
-      setConnectReady(true);
-    };
-    ws.current.close = () => {
-      setConnectReady(false);
-    };
-    ws.current.onmessage = handleReceiveMsg;
+    if (params.token !== "") {
+      console.log(wsHostname + "/?token=" + params.token);
+      ws.current = new WebSocket(wsHostname + "/?token=" + params.token);
+      ws.current.onopen = () => {
+        setConnectReady(true);
+      };
+      ws.current.close = () => {
+        setConnectReady(false);
+      };
+      ws.current.onerror = (e) => {
+        console.log(e);
+        message.error(e, 2);
+      };
+      ws.current.onmessage = handleReceiveMsg;
+    }
 
     return () => {
       ws.current?.close();
     };
-  }, [ws]);
+  }, [ws, params.token]);
 
   useEffect(() => {
     if (msgWindow.current) {
@@ -51,7 +59,9 @@ function Chat(params: IChatParams) {
     ws?.current?.send(Content);
   };
   const handleReceiveMsg = (event: MessageEvent) => {
-    let msgData = event.data as IMessageInfo;
+    let msgData = JSON.parse(event.data) as IMessageInfo;
+    msgData.send_time *= 1000;
+    console.log(msgData);
     if (msgData.user.user_id === params.userInfo.user_id) {
       // 如果接收到的消息是自己发送的则忽略
       return;
@@ -64,15 +74,16 @@ function Chat(params: IChatParams) {
   return (
     <div className="chat">
       <div className="messages" ref={msgWindow}>
-        {testMessages.map((msg) => (
+        {msgList.map((msg, index) => (
           <Message
-            key={msg.messageID}
-            content={msg.content}
-            nickname={msg.nickname}
-            user_id={msg.userID}
+            key={index}
+            content={msg.message_content}
+            nickname={msg.user.nickname}
             nowTime={nowTime}
-            sentTime={msg.sentTime}
-            status={msg.status}
+            sentTime={msg.send_time}
+            status={
+              msg.user.user_id === params.userInfo.user_id ? "sent" : "receive"
+            }
           />
         ))}
       </div>
