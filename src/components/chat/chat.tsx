@@ -56,7 +56,18 @@ function Chat(params: IChatParams) {
 
   const nowTime = new Date();
   const sendMsg = (Content: string) => {
-    ws?.current?.send(Content);
+    ws.current?.send(Content);
+    let nextMsgList = msgList,
+      msgData: IMessageInfo = {
+        user: {
+          user_id: params.userInfo.user_id,
+          nickname: params.userInfo.nickname,
+        },
+        message_content: Content,
+        send_time: new Date().getTime(),
+      };
+    nextMsgList.push(msgData);
+    setMsgList(nextMsgList);
   };
   const handleReceiveMsg = (event: MessageEvent) => {
     let msgData = JSON.parse(event.data) as IMessageInfo;
@@ -102,41 +113,3 @@ interface messageInfo {
   userID: number;
   status: "receive" | "sending" | "sent" | "fail";
 }
-
-const testMessages: messageInfo[] = [
-  {
-    content:
-      "测试消息：别人发送成功。很长很长很长；测试消息：别人发送成功。很长很长很长；测试消息：别人发送成功。很长很长很长；测试消息：别人发送成功。很长很长很长；测试消息：别人发送成功。很长很长很长；测试消息：别人发送成功。很长很长很长；",
-    messageID: 0,
-    sentTime: 0,
-    nickname: "测试用户A",
-    userID: 1,
-    status: "receive",
-  },
-  {
-    content:
-      "测试消息：自己发送成功。测试消息：自己发送成功。测试消息：自己发送成功。测试消息：自己发送成功。测试消息：自己发送成功。测试消息：自己发送成功。测试消息：自己发送成功。",
-    messageID: 1,
-    sentTime: 1234567890,
-    nickname: "测试用户B",
-    userID: 0,
-    status: "sent",
-  },
-  {
-    content: "测试消息：自己发送失败",
-    messageID: 2,
-    sentTime: 2345678901,
-    nickname: "测试用户B",
-    userID: 0,
-    status: "fail",
-  },
-  {
-    content:
-      "测试消息：自己发送中。测试消息：自己发送中。测试消息：自己发送中。测试消息：自己发送中。测试消息：自己发送中。测试消息：自己发送中。测试消息：自己发送中。",
-    messageID: 3,
-    sentTime: 987654323,
-    nickname: "测试用户B",
-    userID: 0,
-    status: "sending",
-  },
-];
