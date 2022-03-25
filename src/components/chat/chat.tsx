@@ -48,7 +48,6 @@ function Chat(params: IChatParams) {
   }, [ws, params.token]);
 
   useEffect(() => {
-    // console.log(msgWindow.current?.scrollTop);
     if (msgWindow.current) {
       msgWindow.current.scrollTop = msgWindow?.current?.scrollHeight;
     }

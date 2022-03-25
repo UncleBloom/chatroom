@@ -79,14 +79,20 @@ const avatarChar = (nickname: string): string => {
 };
 
 const timeString = (past: Date, now: Date): string => {
+  const minute: string =
+    (past.getMinutes() < 10 ? "0" : "") + past.getMinutes();
   if (past.getFullYear() !== now.getFullYear()) {
-    return `${past.getFullYear()}/${past.getMonth()+1}/${past.getDate()} ${past.getHours()}:${past.getMinutes()}`;
+    return `${past.getFullYear()}/${
+      past.getMonth() + 1
+    }/${past.getDate()} ${past.getHours()}:${minute}`;
   } else if (
     past.getMonth() !== now.getMonth() ||
     past.getDate() !== now.getDate()
   ) {
-    return `${past.getMonth()+1}/${past.getDate()} ${past.getHours()}:${past.getMinutes()}`;
+    return `${
+      past.getMonth() + 1
+    }/${past.getDate()} ${past.getHours()}:${minute}`;
   } else {
-    return `${past.getHours()}:${past.getMinutes()}`;
+    return `${past.getHours()}:${minute}`;
   }
 };
