@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { message } from "antd";
 import "./input.scss";
-import TextArea from "antd/lib/input/TextArea";
 
 interface IInputParams {
   sendMessage: (content: string) => void;
@@ -19,15 +18,18 @@ export default function Input(params: IInputParams) {
   };
   return (
     <div className="input">
-      <div className="textareaContainer">
-        <TextArea
-          autoSize={{ minRows: 1, maxRows: 3 }}
-          value={text}
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
-        />
-      </div>
+      <input
+        type="text"
+        value={text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleSendMsg();
+          }
+        }}
+      />
       <button onClick={handleSendMsg}>发 送</button>
     </div>
   );

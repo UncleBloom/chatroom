@@ -7,28 +7,21 @@
     padding: 10px 20px 15px 10px;
     min-width: 500px;
 
-    .textareaContainer{
+    input{
         flex:1 1;
         margin:0 20px;
         height: 100%;
         display: flex;
         align-items: center;
-        box-shadow: #005a92 0 0 8px,
-                #c3e8ff 0 0 5px inset;
         border-radius: 40px;
+        border:#005a92 1px solid;
+        outline: none;
+        padding:0 20px;
         
-        
-        textarea{
-            border: none;
-            background-color: rgba(255, 255, 255, 0);
-            padding: 0 20px;
-            resize: none;
-            overflow-y: hidden;
-            
-            &:focus{
-                border: 0;
-                box-shadow: none;
-            }
+        &:focus{
+            box-shadow: #005a92 0 0 8px,
+                    #c3e8ff 0 0 5px inset;
+                    border: 0px;
         }
     }
 
