@@ -4,8 +4,11 @@
 }
 
 .login {
-
   transition: all 1s;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
   
   .iconfont {
     font-family: "loginIconfont" !important;
@@ -15,7 +18,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
+
   .loginBar {
     position: absolute;
     margin: auto;
@@ -25,13 +28,14 @@
     right:0;
 
     display: flex;
-    align-items: center;
     height: 400px;
     width: 830px;
     padding: 20px 24px 24px 80px;
     border-radius: 200px;
     justify-content: space-between;
-    box-shadow:0px 0px 20px #2fcfd4;
+    background-color: #fff;
+    box-shadow:0px 0px 40px #002fa7,
+      inset 0px 0px 30px #bbbbbb ;
 
     .info {
       display: flex;
@@ -82,9 +86,9 @@
       }
 
       &:hover {
-        box-shadow: inset 0 0 10px #40a3e6,
-        inset 0 0 40px #bbbbbb,
-        0 0 10px #40a3e6;
+        box-shadow: inset 0 0 10px #5000b8,
+        inset 0 0 40px 5px #bbbbbb,
+        0 0 20px #5000b8;
       }
 
       .ant-spin-dot{
@@ -100,5 +104,10 @@
 }
 
 .logged{
+  transition: all 2s;
   visibility: hidden;
+
+  .loginBar{
+    opacity: 0;
+  }
 }

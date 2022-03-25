@@ -110,8 +110,6 @@ function Login(params: ILoginParams) {
 
   return (
     <div className={`login ${params.logged ? "logged" : ""}`}>
-      <div className="leftMask" />
-      <div className="rightMask" />
       <div className="loginBar">
         <div className="info">
           <div className="title">
